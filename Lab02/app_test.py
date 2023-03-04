@@ -3,16 +3,15 @@ from unittest.mock import patch, Mock, call
 from app import *
 
 
-def fake_write(name):
-    content = f"Congrats, {name}!"
-    print(content)
-    return content
-
-
 class ApplicationTest(unittest.TestCase):
     people = ["William", "Oliver", "Henry", "Liam"]
     selected = ["William", "Oliver", "Henry"]
     random_list = ["William", "Oliver", "Henry", "Liam"]
+
+    def fake_mailsystem_write(self, name):
+        content = f"Congrats, {name}!"
+        print(content)
+        return content
 
     def setUp(self):
         with patch.object(Application, "__init__", return_value=None):
@@ -33,7 +32,7 @@ class ApplicationTest(unittest.TestCase):
             mailSystem.send.side_effect = lambda name, content: None
 
             mailSystem.write = Mock(return_value=None)
-            mailSystem.write.side_effect = fake_write
+            mailSystem.write.side_effect = self.fake_mailsystem_write
 
             app.mailSystem = mailSystem
 
