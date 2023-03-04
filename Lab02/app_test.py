@@ -45,40 +45,46 @@ class ApplicationTest(unittest.TestCase):
         # test `select_next_person()`
         first_person = app.select_next_person()
         print(f"1st time of `select_next_person`: {first_person} selected")
-        assert first_person is self.people[3]
+        self.assertEqual(first_person, self.people[3])
 
         second_person = app.select_next_person()
         print(f"2nd time of `select_next_person`: {second_person} selected")
-        assert second_person is None
+        self.assertEqual(second_person, None)
 
         third_person = app.select_next_person()
         print(f"3rd time of `select_next_person`: {third_person} selected")
-        assert third_person is None
+        self.assertEqual(third_person, None)
 
         fourth_person = app.select_next_person()
         print(f"4th time of `select_next_person`: {fourth_person} selected")
-        assert fourth_person is None
+        self.assertEqual(fourth_person, None)
 
         # test MailSystem
         app.notify_selected()
 
-        assert app.mailSystem.send.call_count is 4
-        assert app.mailSystem.write.call_count is 4
+        self.assertEqual(app.mailSystem.send.call_count, 4)
+        self.assertEqual(app.mailSystem.write.call_count, 4)
 
         print(app.mailSystem.write.call_args_list)
-        assert app.mailSystem.write.call_args_list == [
-            call("William"),
-            call("Oliver"),
-            call("Henry"),
-            call("Liam"),
-        ]
+        self.assertEqual(
+            app.mailSystem.write.call_args_list,
+            [
+                call("William"),
+                call("Oliver"),
+                call("Henry"),
+                call("Liam"),
+            ],
+        )
         print(app.mailSystem.send.call_args_list)
-        assert app.mailSystem.send.call_args_list == [
-            call("William", "Congrats, William!"),
-            call("Oliver", "Congrats, Oliver!"),
-            call("Henry", "Congrats, Henry!"),
-            call("Liam", "Congrats, Liam!"),
-        ]
+        self.assertEqual(
+            app.mailSystem.send.call_args_list,
+            [
+                call("William", "Congrats, William!"),
+                call("Oliver", "Congrats, Oliver!"),
+                call("Henry", "Congrats, Henry!"),
+                call("Liam", "Congrats, Liam!"),
+            ],
+        )
 
 
 if __name__ == "__main__":
