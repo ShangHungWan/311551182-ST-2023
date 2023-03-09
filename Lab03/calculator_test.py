@@ -6,11 +6,11 @@ import math
 class ApplicationTest(unittest.TestCase):
     def test_add(self):
         test_array = [
-            [0, 1, 1],
-            [-5, 9, 4],
-            [0, 0, 0],
-            [-5, 3, -2],
-            [100, 999, 1099],
+            (0, 1, 1),
+            (-5, 9, 4),
+            (0, 0, 0),
+            (-5, 3, -2),
+            (100, 999, 1099),
         ]
 
         for arr in test_array:
@@ -22,11 +22,11 @@ class ApplicationTest(unittest.TestCase):
 
     def test_divide(self):
         test_array = [
-            [4, 2, 2.0],
-            [-10, 2, -5.0],
-            [0, 5, 0],
-            [5, 2, 2.5],
-            [999, 333, 3.0],
+            (4, 2, 2.0),
+            (-10, 2, -5.0),
+            (0, 5, 0),
+            (5, 2, 2.5),
+            (999, 333, 3.0),
         ]
 
         for arr in test_array:
@@ -38,11 +38,11 @@ class ApplicationTest(unittest.TestCase):
 
     def test_sqrt(self):
         test_array = [
-            [4, 2],
-            [0, 0],
-            [16, 4],
-            [9, 3],
-            [25, 5]
+            (4, 2),
+            (0, 0),
+            (16, 4),
+            (9, 3),
+            (25, 5),
         ]
 
         for arr in test_array:
@@ -55,11 +55,11 @@ class ApplicationTest(unittest.TestCase):
     def test_exp(self):
         E_SQUARE = round(math.e ** 2, 14)
         test_array = [
-            [0, 1],
-            [1, math.e],
-            [-1, 1 / math.e],
-            [2, E_SQUARE],
-            [-2, 1 / E_SQUARE],
+            (0, 1),
+            (1, math.e),
+            (-1, 1 / math.e),
+            (2, E_SQUARE),
+            (-2, 1 / E_SQUARE),
         ]
 
         for arr in test_array:
