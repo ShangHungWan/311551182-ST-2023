@@ -13,9 +13,9 @@ class ApplicationTest(unittest.TestCase):
             (100, 999, 1099),
         ]
 
-        for arr in test_array:
-            result = Calculator.add(arr[0], arr[1])
-            self.assertEqual(result, arr[2])
+        for input1, input2, answer in test_array:
+            result = Calculator.add(input1, input2)
+            self.assertEqual(result, answer)
 
         with self.assertRaises(TypeError):
             Calculator.add("abc", True)
@@ -29,9 +29,9 @@ class ApplicationTest(unittest.TestCase):
             (999, 333, 3.0),
         ]
 
-        for arr in test_array:
-            result = Calculator.divide(arr[0], arr[1])
-            self.assertEqual(result, arr[2])
+        for input1, input2, answer in test_array:
+            result = Calculator.divide(input1, input2)
+            self.assertEqual(result, answer)
 
         with self.assertRaises(TypeError):
             Calculator.divide("abc", True)
@@ -45,9 +45,9 @@ class ApplicationTest(unittest.TestCase):
             (25, 5),
         ]
 
-        for arr in test_array:
-            result = Calculator.sqrt(arr[0])
-            self.assertEqual(result, arr[1])
+        for input, answer in test_array:
+            result = Calculator.sqrt(input)
+            self.assertEqual(result, answer)
 
         with self.assertRaises(TypeError):
             Calculator.sqrt("abc", True)
@@ -62,9 +62,11 @@ class ApplicationTest(unittest.TestCase):
             (-2, 1 / E_SQUARE),
         ]
 
-        for arr in test_array:
-            result = Calculator.exp(arr[0])
-            self.assertEqual(result, arr[1])
+        for input, answer in test_array:
+            result = Calculator.exp(
+                input,
+            )
+            self.assertEqual(result, answer)
 
         with self.assertRaises(TypeError):
             Calculator.exp("abc")
