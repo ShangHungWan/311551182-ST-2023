@@ -40,7 +40,7 @@ inputEle.send_keys('311551182')
 inputEle.send_keys(Keys.ENTER)
 
 secondResultEle = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
-    (By.XPATH, '/html/body/div[7]/div/div[11]/div/div[2]/div[2]/div/div/div[2]/div/div/div[1]/div/a/h3')))
+    (By.XPATH, "(//h3[contains(@class, 'LC20lb')])[2]")))
 print(secondResultEle.text)
 
 driver.quit()
