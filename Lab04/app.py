@@ -1,16 +1,18 @@
+from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 
 options = Options()
 options.add_argument('--headless')
 options.add_argument('--window-size=1920,1080')
 options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(service=ChromeService(
-    ChromeDriverManager().install()), chrome_options=options)
+    ChromeDriverManager().install()), options=options)
 
 driver.get('https://www.nycu.edu.tw')
 
@@ -37,8 +39,8 @@ inputEle = driver.find_element(
 inputEle.send_keys('311551182')
 inputEle.send_keys(Keys.ENTER)
 
-secondResultEle = driver.find_element(
-    By.XPATH, '/html/body/div[7]/div/div[11]/div/div[2]/div[2]/div/div/div[2]/div/div/div[1]/div/a/h3')
+secondResultEle = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+    (By.XPATH, '/html/body/div[7]/div/div[11]/div/div[2]/div[2]/div/div/div[2]/div/div/div[1]/div/a/h3')))
 print(secondResultEle.text)
 
 driver.quit()
