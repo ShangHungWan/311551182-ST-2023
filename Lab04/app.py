@@ -3,13 +3,16 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--window-size=1920,1080')
+options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(service=ChromeService(
-    ChromeDriverManager().install()))
+    ChromeDriverManager().install()), chrome_options=options)
 
 driver.get('https://www.nycu.edu.tw')
-
-driver.maximize_window()
 
 newsAEle = driver.find_element(
     By.XPATH, '/html/body/div[1]/div/main/div/div/div/article/div/div/div/div/section[2]/div/div/div[1]/div/div/div/div/nav[1]/ul/li[2]/a')
