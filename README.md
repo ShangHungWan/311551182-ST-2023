@@ -10,4 +10,6 @@
 
 [![Lab04 CI](https://github.com/ShangHungWan/311551182-ST-2023/actions/workflows/Lab04-CI.yml/badge.svg)](https://github.com/ShangHungWan/311551182-ST-2023/actions/workflows/Lab04-CI.yml)
 
+[![Lab05 CI](https://github.com/ShangHungWan/311551182-ST-2023/actions/workflows/Lab05-CI.yml/badge.svg)](https://github.com/ShangHungWan/311551182-ST-2023/actions/workflows/Lab05-CI.yml)
+
 311551182 萬尚宏
