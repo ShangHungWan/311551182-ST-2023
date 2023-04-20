@@ -3,3 +3,5 @@ __pycache__
 *.bc
 *.so
 newprog
+vgcore.*
+*.out
