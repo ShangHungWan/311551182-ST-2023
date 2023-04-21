@@ -5,3 +5,4 @@ __pycache__
 newprog
 vgcore.*
 *.out
+*.o

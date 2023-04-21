@@ -8,7 +8,6 @@ void foo()
 
 int main()
 {
-
     foo();
     *x = 42;
 
