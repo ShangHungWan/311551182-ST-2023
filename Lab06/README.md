@@ -8,7 +8,7 @@
 |  Stack out-of-bounds    |   X   |   O   |
 |  Global Heap out-of-bounds    |   X   |   O   |
 |  Use-after-free    |   O   |    X  |
-|  Use-after-return    |   X   |   O   |
+|  Use-after-return    |   O   |   O   |
 
 ## Environments
 
@@ -333,7 +333,7 @@ N/A
 ### Use-after-return
 
 - ASan O
-- Valgrind X
+- Valgrind O
 
 #### Code
 
@@ -342,52 +342,50 @@ char *x;
 
 void foo()
 {
-    char buffer[2];
+    char buffer[400];
     x = &buffer[1];
 }
 
 int main()
 {
-
     foo();
     *x = 42;
 
-    return 0;
+  return 0;
 }
-
 ```
 
 #### ASan
 
 ```
 =================================================================
-==10478==ERROR: AddressSanitizer: stack-use-after-scope on address 0x7fffa42b1711 at pc 0x0000004012d5 bp 0x7fffa42b16e0 sp 0x7fffa42b16d8
-WRITE of size 1 at 0x7fffa42b1711 thread T0
-    #0 0x4012d4 in main /home/sun/311551182-ST-2023/Lab06/use_after_return.c:13
-    #1 0x7eff3744a50f in __libc_start_call_main (/lib64/libc.so.6+0x2750f)
-    #2 0x7eff3744a5c8 in __libc_start_main@GLIBC_2.2.5 (/lib64/libc.so.6+0x275c8)
-    #3 0x4010b4 in _start (/home/sun/311551182-ST-2023/Lab06/a.out+0x4010b4)
+==17241==ERROR: AddressSanitizer: stack-use-after-return on address 0x7fd8700ae031 at pc 0x55de52d76385 bp 0x7ffdf5ce3ac0 sp 0x7ffdf5ce3ab0
+WRITE of size 1 at 0x7fd8700ae031 thread T0
+    #0 0x55de52d76384 in main /home/sun/Projects/311551182-ST-2023/Lab06/use_after_return.c:12
+    #1 0x7fd873429d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #2 0x7fd873429e3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #3 0x55de52d76144 in _start (/home/sun/Projects/311551182-ST-2023/Lab06/asan_use_after_return.o+0x1144)
 
-Address 0x7fffa42b1711 is located in stack of thread T0 at offset 33 in frame
-    #0 0x401222 in main /home/sun/311551182-ST-2023/Lab06/use_after_return.c:10
+Address 0x7fd8700ae031 is located in stack of thread T0 at offset 49 in frame
+    #0 0x55de52d76218 in foo /home/sun/Projects/311551182-ST-2023/Lab06/use_after_return.c:4
 
   This frame has 1 object(s):
-    [32, 34) 'buffer' (line 5) <== Memory access at offset 33 is inside this variable
+    [48, 448) 'buffer' (line 5) <== Memory access at offset 49 is inside this variable
 HINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork
       (longjmp and C++ exceptions *are* supported)
-SUMMARY: AddressSanitizer: stack-use-after-scope /home/sun/311551182-ST-2023/Lab06/use_after_return.c:13 in main
+SUMMARY: AddressSanitizer: stack-use-after-return /home/sun/Projects/311551182-ST-2023/Lab06/use_after_return.c:12 in main
 Shadow bytes around the buggy address:
-  0x10007484e290: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e2a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e2b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e2c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e2d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1
-=>0x10007484e2e0: f1 f1[f8]f3 f3 f3 00 00 00 00 00 00 00 00 00 00
-  0x10007484e2f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007484e330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffb8e00dbb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffb8e00dbc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffb8e00dbd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffb8e00dbe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffb8e00dbf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0ffb8e00dc00: f5 f5 f5 f5 f5 f5[f5]f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0ffb8e00dc10: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0ffb8e00dc20: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0ffb8e00dc30: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0ffb8e00dc40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffb8e00dc50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
   Partially addressable: 01 02 03 04 05 06 07 
@@ -407,24 +405,30 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==10478==ABORTING
+  Shadow gap:              cc
+==17241==ABORTING
 ```
 
 #### Valgrind
 
 ```
-==10571== Memcheck, a memory error detector
-==10571== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==10571== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
-==10571== Command: ./a.out
-==10571== 
-==10571== 
-==10571== HEAP SUMMARY:
-==10571==     in use at exit: 0 bytes in 0 blocks
-==10571==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==10571== 
-==10571== All heap blocks were freed -- no leaks are possible
-==10571== 
-==10571== For lists of detected and suppressed errors, rerun with: -s
-==10571== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==17239== Memcheck, a memory error detector
+==17239== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==17239== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==17239== Command: ./valgrind_use_after_return.o
+==17239== 
+==17239== Invalid write of size 1
+==17239==    at 0x1091A9: main (in /home/sun/Projects/311551182-ST-2023/Lab06/valgrind_use_after_return.o)
+==17239==  Address 0x1ffefff681 is on thread 1's stack
+==17239==  431 bytes below stack pointer
+==17239== 
+==17239== 
+==17239== HEAP SUMMARY:
+==17239==     in use at exit: 0 bytes in 0 blocks
+==17239==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==17239== 
+==17239== All heap blocks were freed -- no leaks are possible
+==17239== 
+==17239== For lists of detected and suppressed errors, rerun with: -s
+==17239== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
