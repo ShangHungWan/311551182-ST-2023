@@ -6,3 +6,7 @@ newprog
 vgcore.*
 *.out
 *.o
+*.bmp
+!PoC.bmp
+!test.bmp
+bmpgrayscale
