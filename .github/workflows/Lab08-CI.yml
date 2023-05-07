@@ -20,6 +20,6 @@ jobs:
                   pip install angr
             - name: Verify result
               run: |
-                  cd Lab08/lab
+                  cd Lab08
                   bash -c "time python3 solve.py"
                   python3 verify.py
