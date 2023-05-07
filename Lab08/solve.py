@@ -2,8 +2,8 @@ import angr
 import sys
 
 main_addr = 0x4011A9
-find_addr = 0x40134F
-avoid_addr = 0x40133C
+find_addr = 0x401369
+avoid_addr = 0x401348
 
 
 class my_scanf(angr.SimProcedure):
