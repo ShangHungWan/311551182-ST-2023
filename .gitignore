@@ -10,3 +10,5 @@ vgcore.*
 !PoC.bmp
 !test.bmp
 bmpgrayscale
+my_cfg.png
+solve_input
