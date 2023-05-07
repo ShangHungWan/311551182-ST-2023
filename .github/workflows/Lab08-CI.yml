@@ -22,4 +22,6 @@ jobs:
               run: |
                   cd Lab08
                   bash -c "time python3 solve.py"
+                  cat solve_input
+                  cat solve_input | src/prog
                   python3 verify.py
